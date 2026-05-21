@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken"
+import dtenv from 'dotenv'
 
 export default function authenticateUser(req, res, next) {
 
@@ -7,7 +8,7 @@ export default function authenticateUser(req, res, next) {
     if (header != null) {
         const token = header.replace("Bearer ", "")
 
-        jwt.verify(token, "Key",
+        jwt.verify(token, ProcessingInstruction.env.JWT_SECRET,
             (err, decoded) => {
                 if (decoded == null) {
                     res.status(401).json({ message: "Invalid token" })
